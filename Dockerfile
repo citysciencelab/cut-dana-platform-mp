@@ -22,7 +22,7 @@ RUN npm i --prefix masterportal/addons/dipasAddons/dataNarrator --legacy-peer-de
 RUN npm i --prefix masterportal
 
 RUN npm run buildPortal --prefix masterportal
-
+RUN ls -la /usr/app/masterportal/dist
 # Create container for running mobility-frontend
 FROM nginx
 
