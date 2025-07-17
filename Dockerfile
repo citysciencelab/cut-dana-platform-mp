@@ -1,5 +1,5 @@
 # Create container for building mobility-frontend
-FROM node:16.13.2-alpine as build
+FROM node:18.18.0-alpine as build
 
 RUN mkdir -p /usr/app
 WORKDIR /usr/app
