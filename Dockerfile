@@ -18,7 +18,7 @@ RUN apk add --update --no-cache \
 
 COPY . ./masterportal
 
-RUN npm i --prefix masterportal/addons/dipasAddons/dataNarrator
+RUN npm i --prefix masterportal/addons/dipasAddons/dataNarrator --legacy-peer-deps
 RUN npm i --prefix masterportal
 
 RUN npm run buildPortal --prefix masterportal
@@ -27,6 +27,6 @@ RUN npm run buildPortal --prefix masterportal
 FROM nginx
 
 # Copy build files from build container
-COPY --from=build /usr/app/masterportal/dist /usr/share/nginx/html
+COPY --from=build /usr/app/masterportal/dist/stories /usr/share/nginx/html
 
 EXPOSE 80
