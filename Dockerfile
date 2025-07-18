@@ -22,7 +22,7 @@ RUN npm i --prefix masterportal/addons/dipasAddons/dataNarrator --legacy-peer-de
 RUN npm i --prefix masterportal
 
 # Replace production URL as per custom-build.sh
-RUN node masterportal/elie/devtools/tasks/replaceProductionURL.js
+# RUN node masterportal/elie/devtools/tasks/replaceProductionURL.js
 
 # Use elie-buildPortal instead of buildPortal
 RUN npm run elie-buildPortal --prefix masterportal
