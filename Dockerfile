@@ -18,12 +18,8 @@ RUN apk add --update --no-cache \
 
 COPY . ./masterportal
 
-RUN npm install --prefix masterportal
-
-# Install addons dependencies (addons should be available via submodules)
-RUN npm ci --prefix masterportal/addons
-
-RUN npm install --legacy-peer-deps --prefix masterportal/addons/dipasAddons/dataNarrator
+RUN npm i --prefix masterportal/addons/dipasAddons/dataNarrator --legacy-peer-deps
+RUN npm i --prefix masterportal
 
 # Replace production URL as per custom-build.sh
 RUN node masterportal/elie/devtools/tasks/replaceProductionURL.js
