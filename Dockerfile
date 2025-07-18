@@ -27,6 +27,6 @@ RUN ls -la /usr/app/masterportal/dist
 FROM nginx
 
 # Copy build files from build container
-COPY --from=build /usr/app/masterportal/dist/stories /usr/share/nginx/html
+COPY --from=build /usr/app/masterportal/dist/ /usr/share/nginx/html
 
 EXPOSE 80
