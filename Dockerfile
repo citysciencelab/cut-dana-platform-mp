@@ -18,15 +18,31 @@ RUN apk add --update --no-cache \
 
 COPY . ./masterportal
 
-RUN npm i --prefix masterportal/addons/dipasAddons/dataNarrator --legacy-peer-deps
-RUN npm i --prefix masterportal
+RUN npm install --prefix masterportal
 
-RUN npm run buildPortal --prefix masterportal
+# Install addons dependencies (addons should be available via submodules)
+RUN npm ci --prefix masterportal/addons
+
+RUN npm install --legacy-peer-deps --prefix masterportal/addons/dipasAddons/dataNarrator
+
+# Replace production URL as per custom-build.sh
+RUN node masterportal/elie/devtools/tasks/replaceProductionURL.js
+
+# Use elie-buildPortal instead of buildPortal
+RUN npm run elie-buildPortal --prefix masterportal
 RUN ls -la /usr/app/masterportal/dist
+
+# Replicate custom-build.sh step: copy mastercode into stories directory
+RUN cd /usr/app/masterportal/dist && cp -r mastercode stories/
+
 # Create container for running mobility-frontend
 FROM nginx
+
+# Copy custom nginx configuration
+COPY nginx-portal.conf /etc/nginx/conf.d/default.conf
 
 # Copy build files from build container
 COPY --from=build /usr/app/masterportal/dist/stories /usr/share/nginx/html
 
 EXPOSE 80
+
