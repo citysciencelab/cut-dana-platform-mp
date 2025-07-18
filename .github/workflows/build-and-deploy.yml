@@ -62,7 +62,11 @@ jobs:
             echo "Changing to /opt/cut-dana-staging"
             cd /opt/cut-dana-staging
           fi
-          
+      
+      - name: Sync files to project directory
+        run: |
+          rsync -a --delete ${{ github.workspace }}/ /opt/cut-dana-staging/
+
       - name: Create .env file for MasterPortal
         run: echo "${{ secrets.DOTENV_MP }}" > /opt/cut-dana-staging/mp.env
 
