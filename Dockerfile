@@ -24,6 +24,8 @@ RUN npm i --prefix masterportal
 RUN npm run elie-buildPortal --prefix masterportal
 RUN ls -la /usr/app/masterportal/dist
 
+RUN cd /usr/app/masterportal/dist && cp -r mastercode stories/
+
 FROM nginx
 
 COPY nginx-portal.conf /etc/nginx/conf.d/default.conf
