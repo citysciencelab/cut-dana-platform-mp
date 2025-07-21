@@ -18,8 +18,12 @@ RUN apk add --update --no-cache \
 
 COPY . ./masterportal
 
-# Create .env file with build arguments
-RUN echo "BACKEND_URI=${BACKEND_URI}" > ./masterportal/.env
+RUN if [ -f ./masterportal/mp.env ]; then \
+        echo "Loading environment variables from mp.env"; \
+        set -a && . ./masterportal/mp.env && set +a && \
+    else \
+        echo "mp.env file not found, using default environment variables"; \
+    fi
 
 RUN npm i --prefix masterportal/addons/dipasAddons/dataNarrator --legacy-peer-deps
 RUN npm i --prefix masterportal

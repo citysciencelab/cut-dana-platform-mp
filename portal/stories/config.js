@@ -1,3 +1,5 @@
+const backendUrl = process.env.BACKEND_URI || "http://localhost:8000";
+
 const Config = {
     addons: ["dataNarrator"],
     vuetify: "addons/dipasAddons/dataNarrator/vuetify",
@@ -39,7 +41,7 @@ const Config = {
         changeLanguageOnStartWhen: ["querystring", "localStorage", "htmlTag"]
     },
     login: {
-        interceptorUrlRegex: "http://localhost:8000*"
+        interceptorUrlRegex: `${backendUrl}*`
     }
 };
 

@@ -2,6 +2,8 @@ import Cookie from "./utilsCookies";
 import OIDC from "./utilsOIDC";
 import AxiosUtils from "./utilsAxios";
 
+const backendUrl = process.env.BACKEND_URI || "http://localhost:8000";
+
 /**
  * This function is used to intercept the masterportal load to
  * - check for oidc GET parameters
@@ -31,7 +33,7 @@ export function handleLoginParameters () {
     if (urlParams.has("code")) {
         let response = null;
 
-        fetch("http://localhost:8000/auth/config").then((r) => {
+        fetch(`${backendUrl}/auth/config`).then((r) => {
             if (!r.ok) {
                 throw new Error("Network response was not ok");
             }

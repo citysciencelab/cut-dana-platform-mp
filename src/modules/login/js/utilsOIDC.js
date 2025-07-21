@@ -1,6 +1,8 @@
 import Cookie from "./utilsCookies";
 import {createHash} from "crypto";
 
+const backendUrl = process.env.BACKEND_URI || "http://localhost:8000";
+
 /**
  * if false, local storage will ne used
  */
@@ -275,7 +277,7 @@ async function renewTokenIfNecessary (access_token, refresh_token, config) {
 
     if (expiry > 0 && expiry <= 60_000) {
 
-        const configResponse = await fetch("http://localhost:8080/auth/config"),
+        const configResponse = await fetch(`${backendUrl}/auth/config`),
             configJson = await configResponse.json(),
             req = refreshToken(configJson.tokenUri, configJson.clientId, refresh_token);
 
