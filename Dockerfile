@@ -20,7 +20,7 @@ COPY . ./masterportal
 
 RUN if [ -f ./masterportal/mp.env ]; then \
         echo "Loading environment variables from mp.env"; \
-        set -a && . ./masterportal/mp.env && set +a; \
+        source ./masterportal/mp.env; \
     else \
         echo "mp.env file not found, using default environment variables"; \
     fi
