@@ -84,11 +84,15 @@ module.exports = function buildWebpack (answers) {
 
                 fs.copy("./locales", mastercodeVersionPath + "/locales").then(() => {
 
-                    fs.copy(buildTempPath, mastercodeVersionPath).then(() => {
-                        // console.warn("NOTE: Copied \"" + buildTempPath + "\" to \"" + mastercodeVersionPath + "\".");
+                    fs.copy("./portal", mastercodeVersionPath + "/resources").then(() => {
 
-                        replaceStrings(mastercodeVersionPath);
-                    }).catch(error => console.error(error));
+                        fs.copy(buildTempPath, mastercodeVersionPath).then(() => {
+                            // console.warn("NOTE: Copied \"" + buildTempPath + "\" to \"" + mastercodeVersionPath + "\".");
+
+                            replaceStrings(mastercodeVersionPath);
+                        }).catch(error => console.error(error));
+
+                    }).catch(console.error);
                 }).catch(error => console.error(error));
             }).catch(error => console.error(error));
         }).catch(error => console.error(error));
