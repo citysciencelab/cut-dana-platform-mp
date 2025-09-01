@@ -292,14 +292,6 @@
           "id": "1933"
         },
         {
-          "id": [ "20501", "20502", "20503", "20504" ],
-          "name": "Gruppe Freizeitrouten und Radfernwege (4 WFS Layer)",
-          "typ": "GROUP",
-          "styleId": "4515",
-          "visibility": false,
-          "showInLayerTree": true
-        },
-        {
           "id": "47",
           "styleId": "47",
           "name": "##O+++O## Ich sollte NIEMALS im Themenbaum sichtbar sein (isNeverVisibleInTree)!",
