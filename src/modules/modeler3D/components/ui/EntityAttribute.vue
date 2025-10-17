@@ -84,24 +84,27 @@ export default {
                 :value="value"
                 @change="$emit('change')"
                 @input="$emit('input', $event.target.value)"
+                @keydown.enter.prevent
             >
             <div
                 v-if="buttons"
                 :id="title + '-buttons'"
             >
                 <button
+                    type="button"
                     class="btn btn-primary btn-sm btn-pos"
                     :title="$t(`common:modules.modeler3D.entity.captions.incrementTooltip`)"
-                    @click.exact="$emit('increment')"
-                    @click.shift="$emit('increment-shift')"
+                    @click.exact.prevent="$emit('increment')"
+                    @click.shift.prevent="$emit('increment-shift')"
                 >
                     <i class="bi bi-arrow-up" />
                 </button>
                 <button
+                    type="button"
                     class="btn btn-primary btn-sm btn-pos"
                     :title="$t(`common:modules.modeler3D.entity.captions.incrementTooltip`)"
-                    @click.exact="$emit('decrement')"
-                    @click.shift="$emit('decrement-shift')"
+                    @click.exact.prevent="$emit('decrement')"
+                    @click.shift.prevent="$emit('decrement-shift')"
                 >
                     <i class="bi bi-arrow-down" />
                 </button>
