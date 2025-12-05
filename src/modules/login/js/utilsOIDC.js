@@ -1,8 +1,6 @@
 import Cookie from "./utilsCookies";
 import {createHash} from "crypto";
 
-const backendUrl = process.env.BACKEND_URI || "https://staging-dana-backend.elie.de";
-
 /**
  * if false, local storage will ne used
  */
@@ -276,7 +274,7 @@ async function renewTokenIfNecessary (access_token, refresh_token, config) {
     const expiry = getTokenExpiry(access_token);
 
     if (expiry > 0 && expiry <= 60_000) {
-
+        const backendUrl = Config.backendUrl || "https://staging-dana-backend.elie.de";
         const configResponse = await fetch(`${backendUrl}/auth/config`),
             configJson = await configResponse.json(),
             req = refreshToken(configJson.tokenUri, configJson.clientId, refresh_token);

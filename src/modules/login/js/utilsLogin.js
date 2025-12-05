@@ -2,8 +2,6 @@ import Cookie from "./utilsCookies";
 import OIDC from "./utilsOIDC";
 import AxiosUtils from "./utilsAxios";
 
-const backendUrl = process.env.BACKEND_URI || "https://staging-dana-backend.elie.de";
-
 /**
  * This function is used to intercept the masterportal load to
  * - check for oidc GET parameters
@@ -32,6 +30,7 @@ export function handleLoginParameters () {
 
     if (urlParams.has("code")) {
         let response = null;
+        const backendUrl = Config.backendUrl || "https://staging-dana-backend.elie.de";
 
         fetch(`${backendUrl}/auth/config`).then((r) => {
             if (!r.ok) {
@@ -60,7 +59,6 @@ export function handleLoginParameters () {
                 }
 
                 response = JSON.parse(req.response);
-                console.log(response);
 
                 OIDC.setCookies(response.access_token, response.id_token, response.expires_in, response.refresh_token);
 

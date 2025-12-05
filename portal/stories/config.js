@@ -1,4 +1,4 @@
-const backendUrl = (typeof process !== "undefined" && process.env && process.env.BACKEND_URI) || "https://staging-dana-backend.elie.de";
+const backendUrl = "https://staging-dana-backend.elie.de";
 
 const Config = {
     addons: ["dataNarrator"],
@@ -42,7 +42,8 @@ const Config = {
     },
     login: {
         interceptorUrlRegex: `${backendUrl}*`
-    }
+    },
+    backendUrl: backendUrl
 };
 
 if (typeof module !== "undefined") {
