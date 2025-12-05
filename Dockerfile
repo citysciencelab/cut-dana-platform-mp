@@ -1,5 +1,5 @@
 # Create container for building mobility-frontend
-FROM node:18.18.0-alpine as build
+FROM node:20.19.2-alpine as build
 
 ARG BACKEND_URI=https://staging-dana-backend.elie.de
 ENV BACKEND_URI=$BACKEND_URI
