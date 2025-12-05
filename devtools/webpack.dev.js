@@ -41,8 +41,8 @@ module.exports = function () {
             headers: {
                 "Access-Control-Allow-Origin": "*"
             },
-            https: true,
-            open: true,
+            https: false,
+            open: false,
             openPage: "portal/stories",
             overlay: true,
             port: 9001,

@@ -1,4 +1,4 @@
-const backendUrl = "https://staging-dana-backend.elie.de";
+const backendUrl = "/api/";
 
 const Config = {
     addons: ["dataNarrator"],
