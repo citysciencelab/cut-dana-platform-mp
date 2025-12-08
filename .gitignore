@@ -16,7 +16,6 @@ styleguide
 
 addons/*
 !addons/readme.txt
-!addons/dipasAddons
 
 bowerupdate.log
 build
@@ -50,6 +49,7 @@ npm-debug.log
 # ignore all dev portals except the four standard portals
 /portal/*
 !/portal/basic
+!/portal/stories
 !/portal/master
 !/portal/auto
 !/portal/layer

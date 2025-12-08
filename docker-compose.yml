@@ -1,122 +1,62 @@
 services:
     data-narrator-frontend:
-        build:
-            context: .
-            dockerfile: Dockerfile
+        image: ghcr.io/agriculturedev/cut-dana-platform-mp:staging
+        restart: always
         ports:
             - '3000:80'
-        volumes:
-            - /opt/psa/var/modules/letsencrypt/etc/archive/_plesk_domain/fullchain2.pem:/etc/ssl/certs/mycert.pem
-            - /opt/psa/var/modules/letsencrypt/etc/archive/_plesk_domain/privkey2.pem:/etc/ssl/private/mykey.pem
         networks:
             - story-network
 
     story-backend:
-        build:
-            context: ./story-backend
+        image: ghcr.io/agriculturedev/cut-dana-platform-backend:staging
+        restart: always
+        env_file:
+            - ./backend.env
         ports:
-            - "4000:80"
-            - "4443:443"
+            - "4000:8000"
         depends_on:
             - mongo
-        volumes:
-            - /opt/psa/var/modules/letsencrypt/etc/archive/_plesk_domain/fullchain2.pem:/etc/ssl/certs/mycert.pem
-            - /opt/psa/var/modules/letsencrypt/etc/archive/_plesk_domain/privkey2.pem:/etc/ssl/private/mykey.pem
+            - postgres
         networks:
             - story-network
 
     mongo:
         image: mongo:4.4
         container_name: mongo
-        ports:
-            - "27017:27017"
+        restart: always
+        env_file:
+            - ./mp.env
         volumes:
             - mongo-data:/data/db
-        restart: always
-        environment:
-            - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-            - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
         networks:
             - story-network
 
     mongo-express:
         image: mongo-express:0.54.0
         restart: always
+        env_file:
+            - ./mp.env
         ports:
-            - 8081:8081
-        environment:
-            - ME_CONFIG_MONGODB_ADMINUSERNAME=${ME_CONFIG_MONGODB_ADMINUSERNAME}
-            - ME_CONFIG_MONGODB_ADMINPASSWORD=${ME_CONFIG_MONGODB_ADMINPASSWORD}
-            - ME_CONFIG_MONGODB_URL=${ME_CONFIG_MONGODB_URL}
-            - ME_CONFIG_BASICAUTH=false
-        networks:
-            - story-network
+            - '8081:8081'
         depends_on:
             - mongo
+        networks:
+            - story-network
 
     postgres:
         image: postgres:16.2
+        restart: always
         volumes:
             - postgres_data:/var/lib/postgresql/data
-        environment:
-            POSTGRES_DB: ${POSTGRES_DB}
-            POSTGRES_USER: ${POSTGRES_USER}
-            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        env_file:
+            - ./mp.env
         networks:
             - story-network
-
-    keycloak:
-        image: quay.io/keycloak/keycloak:23.0.6
-        environment:
-            KC_HOSTNAME: story.datanarrator.city/keycloak/
-            KC_HEALTH_ENABLED: true
-            KC_METRICS_ENABLED: true
-            KC_PROXY_HEADERS: forwarded
-            KC_HTTP_ENABLED: true
-
-            KC_DB_URL: jdbc:postgresql://postgres/${POSTGRES_DB}
-            KC_DB: postgres
-            KC_DB_USERNAME: ${POSTGRES_USER}
-            KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
-            KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
-            KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
-
-            KC_HTTPS_CERTIFICATE_FILE: /etc/ssl/certs/mycert.pem
-            KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/ssl/private/mykey.pem
-        ports:
-            - 8444:8443
-            - 9000:8080
-        restart: always
-        depends_on:
-            - postgres
-        networks:
-            - story-network
-        volumes:
-            - /opt/psa/var/modules/letsencrypt/etc/archive/_plesk_domain/fullchain2.pem:/etc/ssl/certs/mycert.pem
-            - /opt/psa/var/modules/letsencrypt/etc/archive/_plesk_domain/privkey2.pem:/etc/ssl/private/mykey.pem
-        command:
-            - start
-
-#    minio:
-#        image: minio/minio:RELEASE.2024-07-15T19-02-30Z
-#        container_name: minio
-#        environment:
-#            - MINIO_ROOT_USER=${MINIO_ROOT_USER}      # MinIO access key for testing - needs to go to .env
-#            - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD} # MinIO secret key for testing - needs to go to .env
-#            - MINIO_DEFAULT_BUCKETS=csldatanarrator
-#        ports:
-#            - '9001:9000'
-#            - '9002:9001'
-#        volumes:
-#            - minio-data:/data
-#        networks:
-#            - story-network
-#        command: server /data --console-address ":9002"
 
 volumes:
     mongo-data:
     postgres_data:
-    #minio-data:
 
 networks:
     story-network:
+

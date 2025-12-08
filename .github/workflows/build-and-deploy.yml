@@ -1,0 +1,93 @@
+name: Build and Deploy to Staging
+
+on:
+  push:
+    branches: [ staging ]
+  repository_dispatch:
+    types: [ trigger-main-build ]
+  workflow_dispatch:
+
+jobs:
+  build-and-push-images:
+    name: Build and Push Docker Images
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout code with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+          token: ${{ secrets.PAT }}
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PAT }}
+
+      - name: Build and push Frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ghcr.io/agriculturedev/cut-dana-platform-mp:staging
+
+      - name: Build and push Backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          tags: ghcr.io/agriculturedev/cut-dana-platform-backend:staging
+
+  deploy-to-staging:
+    name: Deploy to Staging Server
+    needs: build-and-push-images
+    runs-on: staging-deployment
+    
+    steps:
+      - name: Checkout main repo's staging branch
+        uses: actions/checkout@v4
+        with:
+          ref: 'staging'
+
+      - name: Set up project directory on server
+        run: |
+          echo "Working directory is $(pwd)"
+          if [ "$(basename $(pwd))" != "cut-dana-staging" ]; then
+            echo "Changing to /opt/cut-dana-staging"
+            cd /opt/cut-dana-staging
+          fi
+      
+      - name: Sync files to project directory
+        run: |
+          rsync -a --delete ${{ github.workspace }}/ /opt/cut-dana-staging/
+
+      - name: Create .env file for MasterPortal
+        run: echo "${{ secrets.DOTENV_MP }}" > /opt/cut-dana-staging/mp.env
+
+      - name: Create .env file for Backend
+        run: echo "${{ secrets.DOTENV_BACKEND }}" > /opt/cut-dana-staging/backend.env
+
+      - name: Deploy with Docker Compose
+        working-directory: /opt/cut-dana-staging
+        run: |
+          # Log in to GHCR to pull private images
+          echo ${{ secrets.PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          
+          # Pull the new images, and restart the services
+          docker compose pull
+          docker compose up -d --remove-orphans
+          
+          # Apply database migrations
+          echo "Waiting 15s for database to be ready..."
+          sleep 15
+          echo "Applying backend migrations..."
+          docker compose exec story-backend bunx prisma migrate deploy
+
+          # Clean up old, unused Docker images
+          docker image prune -af

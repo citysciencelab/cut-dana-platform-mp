@@ -30,8 +30,9 @@ export function handleLoginParameters () {
 
     if (urlParams.has("code")) {
         let response = null;
+        const backendUrl = Config.backendUrl || "https://staging-dana-backend.elie.de";
 
-        fetch("http://localhost:8000/auth/config").then((r) => {
+        fetch(`${backendUrl}/auth/config`).then((r) => {
             if (!r.ok) {
                 throw new Error("Network response was not ok");
             }
@@ -58,7 +59,6 @@ export function handleLoginParameters () {
                 }
 
                 response = JSON.parse(req.response);
-                console.log(response);
 
                 OIDC.setCookies(response.access_token, response.id_token, response.expires_in, response.refresh_token);
 
@@ -79,20 +79,16 @@ export function handleLoginParameters () {
  * @returns {void}
  */
 function addAuthenticationBearerInterceptors (config) {
-    const token = Cookie.get("token");
+    const getFreshToken = async () => {
+        const access = Cookie.get("token");
+        const refresh = Cookie.get("refresh_token");
 
-    if (token !== undefined) {
-        const account = OIDC.parseJwt(token),
-            expiry = account.exp ? account.exp * 1000 : Date.now() + 10000;
-
-        if (Date.now() > expiry) {
-            OIDC.eraseCookies();
-        }
-
-        AxiosUtils.addInterceptor(token, config?.interceptorUrlRegex);
+        await OIDC.renewTokenIfNecessary(access, refresh, config);
+        return Cookie.get("token");
     }
-}
 
+    AxiosUtils.addInterceptor({ getFreshToken, interceptorUrlRegex: config?.interceptorUrlRegex })
+}
 
 export default {
     handleLoginParameters

@@ -38,6 +38,7 @@ const state = {
     email: undefined,
     accessToken: undefined,
     refreshToken: undefined,
+    userId: undefined,
     iconLogin: "bi-door-open",
     iconLogout: "bi-door-closed",
     iconLogged: "bi-person-circle"

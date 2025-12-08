@@ -204,9 +204,8 @@ export default {
             class="elements-positioned-over-map"
         >
             <component :is="componentMap.mouseHover" />
-            <ControlBar class="controls" />
+<!--            <ControlBar class="controls" />-->
             <component :is="componentMap.wmsTime" />
-            <BaselayerSwitcher />
             <component :is="componentMap.layerPills" />
             <component :is="componentMap.portalFooter" />
         </div>

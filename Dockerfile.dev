@@ -1,0 +1,7 @@
+FROM node:20.19.2-alpine
+
+WORKDIR /app
+
+EXPOSE 9001
+
+ENTRYPOINT ["npm", "run", "start", "--", "--host", "0.0.0.0", "--disable-host-check"]

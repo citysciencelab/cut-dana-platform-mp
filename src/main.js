@@ -14,6 +14,8 @@ import {initiateVueI18Next, initLanguage} from "./plugins/i18next";
 
 import {initiateMatomo} from "./plugins/matomo";
 import vuetify from "../addons/dipasAddons/dataNarrator/vuetify/index";
+import EnhancedConsole from "../elie/devtools/consolePlugin/consolePlugin";
+import { createPinia } from 'pinia'
 
 let app;
 const configPath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/") + 1) + "config.js",
@@ -37,6 +39,7 @@ const configPath = window.location.pathname.substring(0, window.location.pathnam
 
 // Wait until config.js is loaded
 loadConfigJs.then(() => {
+    const pinia = createPinia();
     app = createApp(App);
 
     if (utilsLogin.handleLoginParameters()) {
@@ -52,6 +55,9 @@ loadConfigJs.then(() => {
     initiateVueI18Next(app);
     app.use(store);
 
+    // Install the enhanced console plugin
+    app.use(EnhancedConsole)
+
     if (Config.matomo) {
         initiateMatomo(app);
     }
@@ -60,6 +66,7 @@ loadConfigJs.then(() => {
 
     initLanguage(Config.portalLanguage)
         .then(() => {
+            app.use(pinia);
             app.mount("#masterportal-root");
         });
 });

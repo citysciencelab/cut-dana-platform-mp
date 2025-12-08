@@ -1,3 +1,5 @@
+const backendUrl = "/api/";
+
 const Config = {
     addons: ["dataNarrator"],
     vuetify: "addons/dipasAddons/dataNarrator/vuetify",
@@ -39,8 +41,9 @@ const Config = {
         changeLanguageOnStartWhen: ["querystring", "localStorage", "htmlTag"]
     },
     login: {
-        interceptorUrlRegex: "http://localhost:8000*"
-    }
+        interceptorUrlRegex: `${backendUrl}*`
+    },
+    backendUrl: backendUrl
 };
 
 if (typeof module !== "undefined") {

@@ -39,6 +39,7 @@ export default {
         commit("setScreenName", undefined);
         commit("setUsername", undefined);
         commit("setEmail", undefined);
+        commit("setUserId", undefined);
 
         if (oidcRevocationEndpoint && token) {
             OIDC.revokeToken(oidcRevocationEndpoint, oidcClientId, token);
@@ -80,5 +81,9 @@ export default {
         commit("setEmail", Cookie.get("email"));
 
         return loggedIn;
+    },
+
+    setUserId(state, id) {
+        state.userId = id;
     }
 };
