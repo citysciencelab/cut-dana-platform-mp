@@ -2,6 +2,8 @@ FROM node:20.19.2-alpine
 
 WORKDIR /app
 
+ENV HOSTNAME=localhost
+
 EXPOSE 9001
 
-ENTRYPOINT ["npm", "run", "start", "--", "--host", "0.0.0.0", "--disable-host-check"]
+ENTRYPOINT ["sh", "-c", "npm run start -- --host 0.0.0.0 --disable-host-check --sock-host ${HOSTNAME} --sock-port 443"]
