@@ -5,17 +5,12 @@
 set -e
 
 # Github Username and Repository where the container will be stored
-GH_USERNAME="agriculturedev"
-GH_REPO="elie-masterportal"
+GH_USERNAME="citysciencelab"
+GH_REPO="cut-dana-platform-mp"
 
-git clone https://bitbucket.org/geowerkstatt-hamburg/addons.git /tmp/addons
-rsync -av --exclude='addonsConf.json' /tmp/addons/ addons/
+git clone https://github.com/citysciencelab/cut-dana-platform-addon.git addons/dipasAddons/dataNarrator
 
 npm install
-
-cd addons
-npm ci
-cd ../
 
 cd addons/dipasAddons/dataNarrator
 npm install --legacy-peer-deps
@@ -26,7 +21,6 @@ node elie/devtools/tasks/replaceProductionURL.js
 
 # Step 1: Build the npm app
 echo "Building the npm app..."
-
 
 npm run elie-buildPortal
 

@@ -1,11 +1,10 @@
-# Create container for building mobility-frontend
-FROM node:20.19.2-alpine as build
+FROM node:20-alpine AS build
 
 ARG BACKEND_URI=https://staging-dana-backend.elie.de
 ENV BACKEND_URI=$BACKEND_URI
 
-RUN mkdir -p /usr/app
-WORKDIR /usr/app
+RUN mkdir -p /usr/app/masterportal
+WORKDIR /usr/app/masterportal
 
 RUN apk add --no-cache git
 RUN apk add --update --no-cache \
@@ -19,12 +18,13 @@ RUN apk add --update --no-cache \
     autoconf \
     automake
 
-COPY . ./masterportal
+COPY . .
+COPY ./addons/dipasAddons/dataNarrator/addonsConf.json ./addons/addonsConf.json
 
-RUN npm i --prefix masterportal/addons/dipasAddons/dataNarrator --legacy-peer-deps
-RUN npm i --prefix masterportal
+RUN npm i --prefix addons/dipasAddons/dataNarrator --legacy-peer-deps
+RUN npm i --prefix .
 
-RUN BACKEND_URI=$BACKEND_URI npm run elie-buildPortal --prefix masterportal
+RUN BACKEND_URI=$BACKEND_URI npm run elie-buildPortal --prefix .
 
 RUN ls -la /usr/app/masterportal/dist
 
