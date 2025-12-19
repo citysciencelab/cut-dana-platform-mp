@@ -61,4 +61,8 @@ site/*
 # Ignore Python virtual environment
 .venv/*
 
+# Ignore IntelliJ project files
+*.iml
+.idea/
+
 .qodo

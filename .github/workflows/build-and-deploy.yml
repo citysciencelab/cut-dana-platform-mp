@@ -1,4 +1,4 @@
-name: Build and Deploy to Staging
+name: Build and release DataNarrator docker image
 
 on:
   push:
