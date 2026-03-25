@@ -1,4 +1,4 @@
-const backendUrl = "/api/";
+const backendUrl = "/api";
 
 const Config = {
     addons: ["dataNarrator"],
