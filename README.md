@@ -1,6 +1,6 @@
 # Data Narrator
 
-## City Science Lab - Connected Urban Twin
+## City Science Lab
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/36763878/219619895-12db4431-32d9-458b-a73f-548052404258.png" alt="drawing" />
