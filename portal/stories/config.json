@@ -5,13 +5,13 @@
         "active": true
       },
       "controls": {
-        "rotation":  {
+        "rotation": {
           "showResetRotationAlways": true,
           "showResetRotation": true,
           "rotationIcons": true,
           "moveDistance": 2500,
           "compass2d": true
-        } ,
+        },
         "zoom": true,
         "tiltView": false,
         "totalView": true,
@@ -179,7 +179,7 @@
           "active": true,
           "searchInterfaceInstances": [
             {
-              "id":"elasticSearch_0",
+              "id": "elasticSearch_0",
               "searchCategory": "Thema (externe Fachdaten)"
             },
             {
@@ -227,13 +227,13 @@
     "baselayer": {
       "elements": [
         {
-          "id": "33797",
-          "name": "Geobasiskarten (Schriftplatte)",
-          "url": "https://geodienste.hamburg.de/HH_WMS_Geobasiskarten_Schriftplatte",
+          "id": "19969",
+          "name": "Stadtplan",
+          "url": "https://geodienste.hamburg.de/HH_WMS_Cache_Stadtplan",
           "typ": "WMS",
-          "layers": "geobasiskarten_schriftplatte",
+          "layers": "stadtplan",
           "format": "image/png",
-          "version": "1.3.0",
+          "version": "1.1.1",
           "singleTile": false,
           "transparent": true,
           "transparency": 0,
@@ -244,59 +244,25 @@
           "gfiAttributes": "ignore",
           "gfiTheme": "default",
           "layerAttribution": "nicht vorhanden",
-          "legendURL": "https://geodienste.hamburg.de/HH_WMS_Geobasiskarten_Schriftplatte?language=ger&version=1.3.0&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=geobasiskarten_schriftplatte&format=image/png&STYLE=default",
-          "cache": false,
+          "legendURL": "https://daten-hamburg.de/zz_sonstiges/legenden/geobasiskarten_farbig_60000.png",
+          "cache": true,
           "featureCount": 1,
           "datasets": [],
-          "visibility": false
+          "visibility": true
         },
         {
-          "id": "16405",
-          "name": "ALKIS-Express (farbig)",
-          "url": "https://geodienste.hamburg.de/HH_WMS_ALKIS_Basiskarte",
+          "id": "34127",
+          "name": "Digitale Orthophotos (belaubt) Hamburg",
+          "shortname": "Orthophotos",
           "typ": "WMS",
-          "layers": "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,26,28,24,29",
-          "format": "image/png",
-          "version": "1.3.0",
-          "singleTile": true,
-          "transparent": true,
-          "transparency": 0,
-          "tilesize": 512,
-          "gutter": 0,
-          "minScale": "0",
-          "maxScale": "2500000",
-          "gfiAttributes": "ignore",
-          "gfiTheme": "default",
-          "layerAttribution": "nicht vorhanden",
-          "legendURL": "",
-          "cache": false,
-          "featureCount": 1,
-          "datasets": [],
-          "visibility": false
-        },
-        {
-          "id": "16518",
-          "name": "ALKIS-Express (grau-blau)",
-          "url": "https://geodienste.hamburg.de/HH_WMS_ALKIS_Basiskarte_GB",
-          "typ": "WMS",
-          "layers": "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,26,28,24,29",
-          "format": "image/png",
-          "version": "1.3.0",
-          "singleTile": true,
-          "transparent": true,
-          "transparency": 0,
-          "tilesize": 512,
-          "gutter": 0,
-          "minScale": "0",
-          "maxScale": "2500000",
-          "gfiAttributes": "ignore",
-          "gfiTheme": "default",
-          "layerAttribution": "nicht vorhanden",
-          "legendURL": "",
-          "cache": false,
-          "featureCount": 1,
-          "datasets": [],
-          "visibility": false
+          "visibility": false,
+          "transparency": 30,
+          "preview": {
+            "zoomLevel": 6,
+            "center": "566245.97,5938894.79",
+            "radius": 500
+          },
+          "time": false
         },
         {
           "id": "33780",
@@ -395,13 +361,13 @@
           "visibility": false
         },
         {
-          "id": "19969",
-          "name": "Stadtplan",
-          "url": "https://geodienste.hamburg.de/HH_WMS_Cache_Stadtplan",
+          "id": "33797",
+          "name": "Geobasiskarten (Schriftplatte)",
+          "url": "https://geodienste.hamburg.de/HH_WMS_Geobasiskarten_Schriftplatte",
           "typ": "WMS",
-          "layers": "stadtplan",
+          "layers": "geobasiskarten_schriftplatte",
           "format": "image/png",
-          "version": "1.1.1",
+          "version": "1.3.0",
           "singleTile": false,
           "transparent": true,
           "transparency": 0,
@@ -412,11 +378,59 @@
           "gfiAttributes": "ignore",
           "gfiTheme": "default",
           "layerAttribution": "nicht vorhanden",
-          "legendURL": "https://daten-hamburg.de/zz_sonstiges/legenden/geobasiskarten_farbig_60000.png",
-          "cache": true,
+          "legendURL": "https://geodienste.hamburg.de/HH_WMS_Geobasiskarten_Schriftplatte?language=ger&version=1.3.0&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=geobasiskarten_schriftplatte&format=image/png&STYLE=default",
+          "cache": false,
           "featureCount": 1,
           "datasets": [],
-          "visibility": true
+          "visibility": false
+        },
+        {
+          "id": "16405",
+          "name": "ALKIS-Express (farbig)",
+          "url": "https://geodienste.hamburg.de/HH_WMS_ALKIS_Basiskarte",
+          "typ": "WMS",
+          "layers": "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,26,28,24,29",
+          "format": "image/png",
+          "version": "1.3.0",
+          "singleTile": true,
+          "transparent": true,
+          "transparency": 0,
+          "tilesize": 512,
+          "gutter": 0,
+          "minScale": "0",
+          "maxScale": "2500000",
+          "gfiAttributes": "ignore",
+          "gfiTheme": "default",
+          "layerAttribution": "nicht vorhanden",
+          "legendURL": "",
+          "cache": false,
+          "featureCount": 1,
+          "datasets": [],
+          "visibility": false
+        },
+        {
+          "id": "16518",
+          "name": "ALKIS-Express (grau-blau)",
+          "url": "https://geodienste.hamburg.de/HH_WMS_ALKIS_Basiskarte_GB",
+          "typ": "WMS",
+          "layers": "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,26,28,24,29",
+          "format": "image/png",
+          "version": "1.3.0",
+          "singleTile": true,
+          "transparent": true,
+          "transparency": 0,
+          "tilesize": 512,
+          "gutter": 0,
+          "minScale": "0",
+          "maxScale": "2500000",
+          "gfiAttributes": "ignore",
+          "gfiTheme": "default",
+          "layerAttribution": "nicht vorhanden",
+          "legendURL": "",
+          "cache": false,
+          "featureCount": 1,
+          "datasets": [],
+          "visibility": false
         }
       ]
     },
@@ -459,8 +473,8 @@
           "name": "Schwermetallmessungen",
           "typ": "WMS",
           "visibility": false,
-          "gfiTheme" : {
-            "name" : "DataTable",
+          "gfiTheme": {
+            "name": "DataTable",
             "params": {
               "isFilterable": true,
               "isSortable": true,
@@ -819,8 +833,13 @@
             "circle-rotate-with-view": false,
             "circle-radius": [
               "interpolate",
-              ["linear"],
-              ["get", "Total_votes"],
+              [
+                "linear"
+              ],
+              [
+                "get",
+                "Total_votes"
+              ],
               0,
               6,
               18,
@@ -828,8 +847,13 @@
             ],
             "circle-fill-color": [
               "interpolate",
-              ["linear"],
-              ["get", "compound"],
+              [
+                "linear"
+              ],
+              [
+                "get",
+                "compound"
+              ],
               -1,
               [
                 240,
@@ -849,8 +873,13 @@
             ],
             "circle-opacity": [
               "interpolate",
-              ["linear"],
-              ["get", "Total_votes"],
+              [
+                "linear"
+              ],
+              [
+                "get",
+                "Total_votes"
+              ],
               40000,
               0.6,
               2000000,
