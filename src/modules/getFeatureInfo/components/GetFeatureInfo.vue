@@ -1,5 +1,5 @@
 <script>
-import {mapGetters, mapMutations, mapActions} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 
 import GetFeatureInfoDetached from "./GetFeatureInfoDetached.vue";
 import {mapAttributes} from "@masterportal/masterportalapi/src/lib/attributeMapper";
@@ -69,26 +69,26 @@ export default {
         }),
 
         /**
-         * Returns the current component type of the menu navigation by side.
-         * @returns {String} The current component type.
-         */
+     * Returns the current component type of the menu navigation by side.
+     * @returns {String} The current component type.
+     */
         currentComponentType () {
             return this.currentComponent(this.menuSide)?.type;
         },
 
         /**
-         * Returns the current view type.
-         * It only works if the string has the same name as the component (in ./templates).
-         * @returns {String} the current view type (Detached or Mobile)
-         */
+     * Returns the current view type.
+     * It only works if the string has the same name as the component (in ./templates).
+     * @returns {String} the current view type (Detached or Mobile)
+     */
         currentViewType () {
             return "GetFeatureInfoDetached";
         },
 
         /**
-         * Returns the feature depending on the pager index.
-         * @returns {?Object} - the current feature
-         */
+     * Returns the feature depending on the pager index.
+     * @returns {?Object} - the current feature
+     */
         feature () {
             if (this.gfiFeatures !== null && Array.isArray(this.gfiFeatures) && this.gfiFeatures.length > 0) {
                 return this.gfiFeatures[this.pagerIndex];
@@ -97,27 +97,27 @@ export default {
         },
 
         /**
-         * Left pager is drawn.
-         * @returns {Boolean} Left pager is drawn.
-         */
+     * Left pager is drawn.
+     * @returns {Boolean} Left pager is drawn.
+     */
         leftPager () {
             return this.gfiFeatures.length > 1 && this.pagerIndex > 0;
         },
 
         /**
-         * Right pager is drawn.
-         * @returns {Boolean} Right pager is drawn.
-         */
+     * Right pager is drawn.
+     * @returns {Boolean} Right pager is drawn.
+     */
         rightPager () {
             return this.gfiFeatures.length > 1 && this.pagerIndex < this.gfiFeatures.length - 1;
         }
     },
     watch: {
-        /**
-         * Resets component, if visible is false.
-         * @param {Boolean} value visible
-         * @returns {void}
-         */
+    /**
+     * Resets component, if visible is false.
+     * @param {Boolean} value visible
+     * @returns {void}
+     */
         visible (value) {
             const menuSides = ["mainMenu", "secondaryMenu"],
                 otherSide = menuSides.find((element) => element !== this.initialMenuSide);
@@ -134,9 +134,9 @@ export default {
             }
         },
         /**
-         * Detects changes in visible layers and closes gfi if layer of current shown feature was removed from map.
-         * @returns {void}
-         */
+     * Detects changes in visible layers and closes gfi if layer of current shown feature was removed from map.
+     * @returns {void}
+     */
         visibleSubjectDataLayerConfigs: {
             handler (newVal, oldVal) {
                 if (oldVal.length !== newVal.length && this.feature) {
@@ -160,9 +160,9 @@ export default {
             deep: true
         },
         /**
-         * Whenever the map click coordinate changes collectGfiFeatures action will call.
-         * @returns {void}
-         */
+     * Whenever the map click coordinate changes collectGfiFeatures action will call.
+     * @returns {void}
+     */
         clickCoordinate: {
             handler (value) {
                 if (this.currentMouseMapInteractionsComponent === this.type) {
@@ -175,10 +175,10 @@ export default {
         },
 
         /**
-         * Whenever current component type is changed to  "getFeatureInfo", visible is set to false.
-         * @param {String} type The current component type.
-         * @returns {void}
-         */
+     * Whenever current component type is changed to  "getFeatureInfo", visible is set to false.
+     * @param {String} type The current component type.
+     * @returns {void}
+     */
         currentComponentType (type) {
             if (type !== this.type && !this.showInPopup) {
                 this.setVisible(false);
@@ -186,19 +186,19 @@ export default {
         },
 
         /**
-         * Whenever feature changes, put it into the store
-         * @param {?Object} newValue the current feature
-         * @returns {void}
-         */
+     * Whenever feature changes, put it into the store
+     * @param {?Object} newValue the current feature
+     * @returns {void}
+     */
         feature (newValue) {
             this.setCurrentFeature(newValue);
         },
 
         /**
-         * Whenever mapSize changes, component key is changed
-         * to force re-render detached component (key-changing).
-         * @returns {void}
-         */
+     * Whenever mapSize changes, component key is changed
+     * to force re-render detached component (key-changing).
+     * @returns {void}
+     */
         mapSize: {
             handler () {
                 if (this.currentViewType === "GetFeatureInfoDetached") {
@@ -209,12 +209,12 @@ export default {
         },
 
         /**
-         * Whenever gfiFeatures changes, set this visible and expand menu.
-         * Set the updateFeature value to true if feature are given.
-         * @param {?Object} newFeatures - the current features
-         * @param {?Object} oldFeatures - the recent features
-         * @returns {void}
-         */
+     * Whenever gfiFeatures changes, set this visible and expand menu.
+     * Set the updateFeature value to true if feature are given.
+     * @param {?Object} newFeatures - the current features
+     * @param {?Object} oldFeatures - the recent features
+     * @returns {void}
+     */
         gfiFeatures: {
             handler (newFeatures, oldFeatures) {
                 let featuresChanged = oldFeatures === null;
@@ -278,10 +278,10 @@ export default {
         ]),
 
         /**
-         * Resets means to set the gfiFeatures to null and revert 3D Coloring..
-         * This closes the gfi window/modal/popover.
-         * @returns {void}
-         */
+     * Resets means to set the gfiFeatures to null and revert 3D Coloring..
+     * This closes the gfi window/modal/popover.
+     * @returns {void}
+     */
         reset: function () {
             this.pagerIndex = 0;
             this.setGfiFeatures(null);
@@ -291,18 +291,18 @@ export default {
         },
 
         /**
-         * Set updatedFeature value.
-         * @param {Boolean} val - false if features have been updated or no features are given
-         * @returns {void}
-         */
+     * Set updatedFeature value.
+     * @param {Boolean} val - false if features have been updated or no features are given
+     * @returns {void}
+     */
         setUpdatedFeature: function (val = false) {
             this.updatedFeature = val;
         },
 
         /**
-         * Increases the index for the pagination.
-         * @returns {void}
-         */
+     * Increases the index for the pagination.
+     * @returns {void}
+     */
         increasePagerIndex: function () {
             if (this.pagerIndex < this.gfiFeatures.length - 1) {
                 this.pagerIndex += 1;
@@ -310,9 +310,9 @@ export default {
         },
 
         /**
-         * Decreases the index for the pagination.
-         * @returns {void}
-         */
+     * Decreases the index for the pagination.
+     * @returns {void}
+     */
         decreasePagerIndex: function () {
             if (this.pagerIndex > 0) {
                 this.pagerIndex -= 1;
@@ -332,14 +332,14 @@ export default {
         },
 
         /**
-         * Checks which properties should be displayed.
-         * If all should be displayed, the ignoredKeys omitted.
-         * Otherwise the properties are mapped
-         * @param {Object} properties - the feature properties
-         * @param {Object} mappingObject - "gfiAttributes" from the layer
-         * @param {String[]} ignoredKeys - configured in the config.js
-         * @returns {Object} prepared properties - mapped by MappingObject or omitted by ignoredKeys
-         */
+     * Checks which properties should be displayed.
+     * If all should be displayed, the ignoredKeys omitted.
+     * Otherwise the properties are mapped
+     * @param {Object} properties - the feature properties
+     * @param {Object} mappingObject - "gfiAttributes" from the layer
+     * @param {String[]} ignoredKeys - configured in the config.js
+     * @returns {Object} prepared properties - mapped by MappingObject or omitted by ignoredKeys
+     */
         prepareProperties: function (properties, mappingObject, ignoredKeys) {
 
             if (mappingObject === "showAll" && Array.isArray(ignoredKeys) || mappingObject === undefined) {
@@ -409,21 +409,21 @@ export default {
 <style lang="scss" scoped>
 @import "~variables";
 
-    .gfi {
-        color: $dark_blue;
-        height: 100vh;
-        overflow-x: auto
-    }
+.gfi {
+  color: $dark_blue;
+  height: 100vh;
+  overflow-x: auto
+}
 
-    .gfi-pager {
-        background-color: $menu-background-color;
-    }
+.gfi-pager {
+  background-color: $menu-background-color;
+}
 
-    .gfi-pager-left-margin {
-        margin-left: 2.5rem
-    }
+.gfi-pager-left-margin {
+  margin-left: 2.5rem
+}
 
-    .gfi-pager-right-margin {
-        margin-right: 2.5rem
-    }
+.gfi-pager-right-margin {
+  margin-right: 2.5rem
+}
 </style>
