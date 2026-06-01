@@ -55,6 +55,7 @@
         ]
       },
       "getFeatureInfo": {
+        "showInPopup": true,
         "coloredHighlighting3D": {
           "enabled": true,
           "color": "PURPLE"

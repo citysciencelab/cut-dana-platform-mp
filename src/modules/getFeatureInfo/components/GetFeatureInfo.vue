@@ -47,6 +47,7 @@ export default {
             "initialMenuSide",
             "menuSide",
             "name",
+            "showInPopup",
             "showMarker",
             "type",
             "visible"
@@ -124,7 +125,7 @@ export default {
             if (!value) {
                 this.reset();
             }
-            else {
+            else if (!this.showInPopup) {
                 if (this.currentComponent(this.menuSide).type === "print") {
                     this.setMenuSide(otherSide);
                 }
@@ -179,7 +180,7 @@ export default {
          * @returns {void}
          */
         currentComponentType (type) {
-            if (type !== this.type) {
+            if (type !== this.type && !this.showInPopup) {
                 this.setVisible(false);
             }
         },
@@ -234,7 +235,7 @@ export default {
 
                     if (featuresChanged) {
                         this.setVisible(true);
-                        if (!this.expanded(this.menuSide)) {
+                        if (!this.showInPopup && !this.expanded(this.menuSide)) {
                             this.toggleMenu(this.menuSide);
                         }
                     }
@@ -352,7 +353,7 @@ export default {
 
 <template>
     <div
-        v-if="visible && feature !== null"
+        v-if="visible && feature !== null && !showInPopup"
         class="gfi"
     >
         <component

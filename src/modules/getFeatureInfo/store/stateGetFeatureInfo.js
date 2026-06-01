@@ -15,6 +15,7 @@
  * @property {String} [menuSide="secondaryMenu"] Specifies in which the GFI should be rendered dependending on opened print module.
  * @property {String} [name="common:modules.getFeatureInfo.name"] Displayed as title (config-param).
  * @property {Object[]} [path=[]] Path for menu navigation
+ * @property {Boolean} [showInPopup=false] If true, the GFI is shown as a free-floating popup over the map instead of in the menu panel.
  * @property {Boolean} [showMarker=true] Specifies whether the map marker should be set on click.
  * @property {String} type=getFeatureInfo" The type of the gfi component.
  * @property {Boolean} [visible=false] True if the gfi is visible.
@@ -34,6 +35,7 @@ export default {
     menuSide: "secondaryMenu",
     name: "common:modules.getFeatureInfo.name",
     path: [],
+    showInPopup: false,
     showMarker: true,
     type: "getFeatureInfo",
     visible: false

@@ -12,6 +12,7 @@ import mapCollection from "./core/maps/js/mapCollection";
 import MenuContainer from "./modules/menu/components/MenuContainer.vue";
 import MenuToggleButton from "./modules/menu/components/MenuToggleButton.vue";
 import addonsPlugin from "./plugins/addons";
+import GetFeatureInfoPopup from "./modules/getFeatureInfo/components/GetFeatureInfoPopup.vue";
 
 export default {
     name: "App",
@@ -19,6 +20,7 @@ export default {
         Alerting,
         BaselayerSwitcher,
         ControlBar,
+        GetFeatureInfoPopup,
         MenuContainer,
         MenuToggleButton
     },
@@ -208,6 +210,7 @@ export default {
             <component :is="componentMap.wmsTime" />
             <component :is="componentMap.layerPills" />
             <component :is="componentMap.portalFooter" />
+            <GetFeatureInfoPopup />
         </div>
         <MenuToggleButton
             v-if="allConfigsLoaded && addonsLoaded && secondaryMenu && uiStyle !== 'SIMPLE'"
@@ -266,6 +269,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    position: relative;
     z-index: 1;
     pointer-events: none;
     width: 100%;
