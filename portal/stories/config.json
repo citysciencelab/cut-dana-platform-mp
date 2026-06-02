@@ -173,13 +173,12 @@
       "scaleLine": true,
       "urls": [
         {
-          "bezeichnung": "Impressum",
-          "url": "citysciences.hamburg.de/impressum.html",
-          "alias": "City Science Lab",
+          "url": "https://www.citysciencelab.hamburg/contact",
+          "alias": "Impressum",
           "alias_mobile": "CSL"
         },
         {
-          "url": "till.degkwitz@hcu-hamburg.de",
+          "url": "mailto:till.degkwitz@hcu-hamburg.de",
           "alias": "Mail"
         }
       ]
