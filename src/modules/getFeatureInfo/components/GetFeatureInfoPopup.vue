@@ -21,7 +21,9 @@ export default {
             pagerIndex: 0,
             updatedFeature: false,
             leftIcon: "bi-chevron-left",
-            rightIcon: "bi-chevron-right"
+            rightIcon: "bi-chevron-right",
+            popupLeft: null,
+            popupTop: null
         };
     },
     computed: {
@@ -57,13 +59,34 @@ export default {
             if (!this.clickPixel) {
                 return {};
             }
+            if (this.popupLeft === null || this.popupTop === null) {
+                return {
+                    left: `${this.clickPixel[0] + 15}px`,
+                    top: `${this.clickPixel[1] - 15}px`,
+                    visibility: "hidden"
+                };
+            }
             return {
-                left: `${this.clickPixel[0] + 15}px`,
-                top: `${this.clickPixel[1] - 15}px`
+                left: `${this.popupLeft}px`,
+                top: `${this.popupTop}px`
             };
         }
     },
     watch: {
+        clickPixel: {
+            handler () {
+                this.popupLeft = null;
+                this.popupTop = null;
+                this.updatePosition();
+            },
+            deep: true
+        },
+        feature: {
+            handler () {
+                this.updatePosition();
+            },
+            deep: true
+        },
         gfiFeatures: {
             handler (newFeatures) {
                 if (newFeatures?.length > 0) {
@@ -82,6 +105,9 @@ export default {
             this.createMappedProperties(this.feature);
         }
     },
+    updated () {
+        this.updatePosition();
+    },
     methods: {
         ...mapMutations("Modules/GetFeatureInfo", [
             "setGfiFeatures"
@@ -92,6 +118,8 @@ export default {
 
         close () {
             this.pagerIndex = 0;
+            this.popupLeft = null;
+            this.popupTop = null;
             this.setGfiFeatures(null);
             if (this.mapMode === "3D") {
                 this.removeHighlightColor();
@@ -100,6 +128,40 @@ export default {
 
         setUpdatedFeature (val = false) {
             this.updatedFeature = val;
+        },
+
+        updatePosition () {
+            this.$nextTick(() => {
+                if (this.$refs.popup && this.clickPixel) {
+                    const popupRect = this.$refs.popup.getBoundingClientRect();
+                    const offset = 15;
+                    let left = this.clickPixel[0] + offset;
+                    let top = this.clickPixel[1] - offset;
+
+                    // Exceeds right edge
+                    if (left + popupRect.width > window.innerWidth) {
+                        left = this.clickPixel[0] - popupRect.width - offset;
+                    }
+                    // Exceeds left edge
+                    if (left < 0) {
+                        left = 0;
+                    }
+
+                    // Exceeds bottom edge
+                    if (top + popupRect.height > window.innerHeight) {
+                        top = window.innerHeight - popupRect.height - offset;
+                    }
+                    // Exceeds top edge
+                    if (top < 0) {
+                        top = 0;
+                    }
+
+                    if (this.popupLeft !== left || this.popupTop !== top) {
+                        this.popupLeft = left;
+                        this.popupTop = top;
+                    }
+                }
+            });
         },
 
         increasePagerIndex () {
@@ -142,6 +204,7 @@ export default {
 <template>
     <div
         v-if="showInPopup && visible && feature !== null"
+        ref="popup"
         class="gfi-popup"
         :style="popupStyle"
     >
