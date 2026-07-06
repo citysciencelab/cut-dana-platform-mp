@@ -35,7 +35,6 @@ export default {
     menuSide: "secondaryMenu",
     name: "common:modules.getFeatureInfo.name",
     path: [],
-    showInPopup: false,
     showMarker: true,
     type: "getFeatureInfo",
     visible: false

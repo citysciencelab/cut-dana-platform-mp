@@ -47,7 +47,6 @@ export default {
             "initialMenuSide",
             "menuSide",
             "name",
-            "showInPopup",
             "showMarker",
             "type",
             "visible"
@@ -125,7 +124,7 @@ export default {
             if (!value) {
                 this.reset();
             }
-            else if (!this.showInPopup) {
+            else {
                 if (this.currentComponent(this.menuSide).type === "print") {
                     this.setMenuSide(otherSide);
                 }
@@ -180,7 +179,7 @@ export default {
      * @returns {void}
      */
         currentComponentType (type) {
-            if (type !== this.type && !this.showInPopup) {
+            if (type !== this.type) {
                 this.setVisible(false);
             }
         },
@@ -192,6 +191,7 @@ export default {
      */
         feature (newValue) {
             this.setCurrentFeature(newValue);
+            this.setUpdatedFeature(true);
         },
 
         /**
